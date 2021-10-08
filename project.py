@@ -321,3 +321,12 @@ class User:
         else:
             self.update_account()
 
+    def check(self):
+        check = input(f"Are you sure to change your age? [y/n]: ").strip().lower()
+        options = ['y', 'yes', 'n', 'no']
+        while check not in options:
+            self.clear()
+            print("Invalid input. Please, try again")
+            check = input(f"Are you sure to change your age? [y/n]: ").strip().lower()
+
+        return check
