@@ -339,3 +339,13 @@ class User:
 
         return True if result[0][0] == password else False
 
+    @staticmethod
+    def clear():
+        if platform.system() == "Linux":
+            os.system("clear")
+        elif platform.system() == "Windows":
+            os.system("cls")
+
+
+user1 = User()
+
