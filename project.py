@@ -166,3 +166,30 @@ class User:
                 self.change_age()
             else:
                 sys.exit()
+
+        def change_login(self):
+            self.clear()
+            login1 = input("Enter your login: ").strip()
+            while login1 != self.login:
+                self.clear()
+                print("Your login didn't match. Try again")
+                login1 = input("Enter your login: ").strip()
+            new_login = input("Enter your new login: ").strip()
+            while self.is_login_exists(new_login) or not new_login.isalnum():
+                self.clear()
+                print("This login exists or invalid login")
+                new_login = input("Enter your new login: ").strip()
+            check = input(f"Are you sure to change your login to {new_login}? [y/n]: ").strip().lower()
+            options = ['y', 'yes', 'n', 'no']
+            while check not in options:
+                self.clear()
+                print("Invalid input. Please, try again")
+                check = input(f"Are you sure to change your login to '{new_login}'? [y/n]: ").strip().lower()
+            if check in options[:2]:
+                my_data = self.database()
+                my_cursor = my_data.cursor()
+                my_cursor.execute(f"update login_info set login='{new_login}' where login='{self.login}'")
+                my_data.commit()
+                print("Your login is changed")
+            else:
+                self.update_account()
