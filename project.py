@@ -92,3 +92,13 @@ class User:
                 return False
             elif result[0][0] == login1:
                 return True
+
+        @staticmethod
+        def database():
+            my_data = mysql.connector.connect(
+                host='localhost',
+                user="eugene09",
+                password="12345678",
+                database="login"
+            )
+            return my_data
