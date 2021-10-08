@@ -292,3 +292,32 @@ class User:
             print("Your age is changed")
         else:
             self.update_account()
+
+    def delete_account(self):
+        self.clear()
+        login1 = input("Enter your login: ").strip()
+        while login1 != self.login:
+            self.clear()
+            print("Your login didn't match. Try again")
+            login1 = input("Enter your login: ").strip()
+
+        password = input("Enter your password: ")
+        while not self.is_password_correct(login1, password):
+            self.clear()
+            print("Password didn't match. Try again")
+            password = input("Enter your password: ")
+
+        options = ['y', 'yes', 'n', 'no']
+        check = self.check()
+        if check in options[:2]:
+            my_data = self.database()
+            my_cursor = my_data.cursor()
+            my_cursor.execute(f"delete from login_info where login='{login1}'")
+            my_data.commit()
+            print("Your account has been deleted")
+
+            time.sleep(2.5)
+            self.__init__()
+        else:
+            self.update_account()
+
