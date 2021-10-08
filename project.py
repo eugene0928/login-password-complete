@@ -138,3 +138,31 @@ class User:
                 self.delete_account()
             else:
                 self.__init__()
+        
+        def update_account(self):
+            self.clear()
+            print("""What do you want to change?
+            Login       [1]
+            Password    [2]
+            Username    [3]
+            Age         [4]
+            Exit        [0]""")
+
+            option = input("Enter your option: ").strip()
+            options = ['0','1', '2', '3', '4']
+            while option not in options:
+                self.clear()
+                print("Invalid input. Try again")
+                print(f"Options: {options}")
+                option = input("Enter your option: ").strip()
+            
+            if option == '1':
+                self.change_login()
+            elif option == '2':
+                self.change_password()
+            elif option == '3':
+                self.change_username()
+            elif option == '4':
+                self.change_age()
+            else:
+                sys.exit()
