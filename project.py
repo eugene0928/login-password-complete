@@ -193,3 +193,31 @@ class User:
                 print("Your login is changed")
             else:
                 self.update_account()
+        def change_password(self):
+            self.clear()
+            login1 = input("Enter your login: ").strip()
+            while login1 != self.login:
+                self.clear()
+                print("Your login didn't match. Try again")
+                login1 = input("Enter your login: ").strip()
+            old_password = input("Enter your previous password: ")
+            while not self.is_password_correct(login1, old_password):
+                self.clear()
+                print("Password didn't match. Try again")
+                old_password = input("Enter your previous password: ")
+            new_password = input("Enter your new password(more than 5 characters): ")
+            while len(new_password) < 5:
+                self.clear()
+                print("Please, enter more than 5 characters")
+                new_password = input("Enter your new password: ")
+            check = self.check()
+            options = ['y', 'yes', 'n', 'no']
+
+            if check in options[:2]:
+                my_data = self.database()
+                my_cursor = my_data.cursor()
+                my_cursor.execute(f"update login_info set password='{new_password}' where login='{login1}'")
+                my_data.commit()
+                print("Your password is changed")
+            else:
+                self.update_account()
