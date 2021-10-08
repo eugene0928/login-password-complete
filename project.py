@@ -261,3 +261,34 @@ class User:
             print("Your password is changed")
         else:
             self.update_account()
+
+    def change_age(self):
+        self.clear()
+        login1 = input("Enter your login: ").strip()
+        while login1 != self.login:
+            self.clear()
+            print("Your login didn't match. Try again")
+            login1 = input("Enter your login: ").strip()
+
+        password = input("Enter your password: ")
+        while not self.is_password_correct(login1, password):
+            self.clear()
+            print("Password didn't match. Try again")
+            password = input("Enter your password: ")
+
+        new_age = input("Enter your age: ").strip()
+        while not new_age.isnumeric() or int(new_age) < self.min_age or int(new_age) > self.max_age:
+            self.clear()
+            print("Wrong age. Please, try again")
+            new_age = input("Enter your age: ").strip()
+
+        check = self.check()
+        options = ['y', 'yes', 'n', 'no']
+        if check in options[:2]:
+            my_data = self.database()
+            my_cursor = my_data.cursor()
+            my_cursor.execute(f"update login_info set age='{int(new_age)}' where login='{login1}'")
+            my_data.commit()
+            print("Your age is changed")
+        else:
+            self.update_account()
