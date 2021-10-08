@@ -102,3 +102,39 @@ class User:
                 database="login"
             )
             return my_data
+
+        def log_in(self):
+            self.clear()
+            input_login = input("Enter your login: ").strip()
+            while not self.is_login_exists(input_login):
+                self.clear()
+                print("The login didn't match. Try again")
+                input_login = input("Enter your login: ").strip()
+
+            self.login = input_login
+
+            input_password = input("Enter your password: ")
+            while not self.is_password_correct(self.login, input_password):
+                self.clear()
+                print("Wrong password. Please, try again")
+                input_password = input("Enter your password: ")
+
+            self.clear()
+            print("You've entered the system")
+
+            print("""        Update account          [1]
+            Delete account          [2]
+            Exit                    [3]""")
+            
+            choice = input("Your choice: ").strip()
+            options = ['1', '2', '3']
+            while choice not in options:
+                self.clear()
+                print("Invalid input. Try again")
+                choice = input("Your choice: ").strip()
+            if choice == "1":
+                self.update_account()
+            elif choice == "2":
+                self.delete_account()
+            else:
+                self.__init__()
