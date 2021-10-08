@@ -330,3 +330,12 @@ class User:
             check = input(f"Are you sure to change your age? [y/n]: ").strip().lower()
 
         return check
+
+    def is_password_correct(self, login, password):
+        my_data = self.database()
+        my_cursor = my_data.cursor()
+        my_cursor.execute(f"select password from login_info where login='{login}';")
+        result = my_cursor.fetchall()
+
+        return True if result[0][0] == password else False
+
