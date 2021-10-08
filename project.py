@@ -81,3 +81,14 @@ class User:
             my_cursor.execute(f"insert into login_info values('{self.name}', '{self.login}', '{self.password}', '{self.age}');")
             my_data.commit()
             print("You have entered the system!")
+
+        def is_login_exists(self, login1):
+            my_data = self.database()
+            my_cursor = my_data.cursor()
+            my_cursor.execute(f"select login from login_info where login='{login1}';")
+            result = my_cursor.fetchall()
+
+            if len(result) == 0:
+                return False
+            elif result[0][0] == login1:
+                return True
